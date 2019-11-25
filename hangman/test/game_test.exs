@@ -15,4 +15,11 @@ defmodule GameTest do
 
     assert Enum.all?(game.letters, &(String.match?(&1, ~r/[a-z]/))) == true
   end
+
+  test "state isn't changed for :won or lost game" do
+    for state <- [ :won, :lost ] do
+      game = Game.new_game() |> Map.put(:game_state, state)
+      assert { ^game, _ } = Game.make_move(game, "x")
+    end
+  end
 end
