@@ -21,7 +21,7 @@ defmodule Hangman.Game do
   end
 
   def make_move(game, guess) do
-    game = accept_move(game, guess, MapSet.member?(game.used, guess))
+    game = accept_move(game, guess, MapSet.member?(game.used, guess), validate_move(guess))
     game
   end
 
@@ -35,11 +35,20 @@ defmodule Hangman.Game do
 
   ####################################################
 
-  defp accept_move(game, _guess, _already_guessed = true) do
+  defp validate_move(guess) do
+    guess
+    |> String.match?(~r/[a-z]/)
+  end
+
+  defp accept_move(game, _guess, _, _valid? = false) do
+    Map.put(game, :game_state, :not_valid)
+  end
+
+  defp accept_move(game, _guess, _already_guessed = true, _) do
     Map.put(game, :game_state, :already_used)
   end
 
-  defp accept_move(game, guess, _already_guessed) do
+  defp accept_move(game, guess, _already_guessed, _) do
     Map.put(game, :used, MapSet.put(game.used, guess))
     |> score_guess(Enum.member?(game.letters, guess))
   end

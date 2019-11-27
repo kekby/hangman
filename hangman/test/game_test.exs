@@ -94,4 +94,11 @@ defmodule GameTest do
     game = Game.make_move(game, "g")
     assert game.game_state == :lost
   end
+
+  test "invalid move is recognized" do
+    game = Game.new_game("wibble")
+    game = Game.make_move(game, "A")
+
+    assert game.game_state == :not_valid
+  end
 end
