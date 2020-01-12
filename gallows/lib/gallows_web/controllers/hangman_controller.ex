@@ -24,4 +24,8 @@ defmodule GallowsWeb.HangmanController do
     put_in(conn.params["make_move"]["guess"], "")
     |> render("game_field.html", tally: tally)
   end
+
+  def redirect_to_new_game(conn, _params) do
+    redirect(conn, external: Routes.hangman_path(conn, :create_game)  )
+  end
 end
