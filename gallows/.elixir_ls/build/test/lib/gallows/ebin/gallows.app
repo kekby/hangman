@@ -4,6 +4,7 @@
                              phoenix_html,plug_cowboy,phoenix]},
               {description,"gallows"},
               {modules,['Elixir.Gallows','Elixir.Gallows.Application',
+                        'Elixir.Gallows.View.Helpers.GameStateHelper',
                         'Elixir.GallowsWeb','Elixir.GallowsWeb.ChannelCase',
                         'Elixir.GallowsWeb.ConnCase',
                         'Elixir.GallowsWeb.Endpoint',
