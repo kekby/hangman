@@ -20,6 +20,7 @@ export default class HangmanSocket {
       .receive("ok", resp => {
         console.log("connected: ", resp);
         this.fetch_tally();
+        this.reprieve();
       })
       .receive("error", resp => {
         console.log("error: ", resp);
@@ -29,5 +30,9 @@ export default class HangmanSocket {
 
   fetch_tally() {
     this.channel.push("tally", {});
+  }
+
+  reprieve() {
+    this.channel.push("reprieve");
   }
 }
