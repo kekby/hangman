@@ -30,7 +30,7 @@ defmodule Hangman.Game do
     %{
       game_state: game.game_state,
       turns_left: game.turns_left,
-      letters:    game.letters |> reveal_guessed(game.used),
+      letters:    get_letters(game),
       letters_used: game.used |> MapSet.to_list
     }
   end
@@ -68,6 +68,7 @@ defmodule Hangman.Game do
   end
 
   defp score_guess(game = %{ turns_left: 1 }, _good_guess) do
+
     %{ game |
       game_state: :lost,
       turns_left: 0
@@ -94,4 +95,6 @@ defmodule Hangman.Game do
   defp maybe_won(true), do: :won
   defp maybe_won(_), do: :good_guess
 
+  defp get_letters(game = %{ game_state: :lost }), do: game.letters
+  defp get_letters(game), do: game.letters |> reveal_guessed(game.used)
 end

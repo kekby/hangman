@@ -21,7 +21,7 @@ let view = function(hangman) {
       computed: {
           game_over: function() {
               let state = this.tally.game_state
-              return (state == "won") || (state == "lost")
+              return (state == "won") || (state == "lost") || (state == "time_run_out")
           },
           game_state_message: function() {
               let state = this.tally.game_state

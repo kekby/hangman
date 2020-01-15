@@ -47,7 +47,7 @@ defmodule SocketGallowsWeb.HangmanChannel do
   end
 
   defp start_timer() do
-    tick(5)
+    tick(60)
   end
 
   defp start_timer(seconds) do
