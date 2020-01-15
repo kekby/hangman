@@ -5,6 +5,7 @@ defmodule SocketGallowsWeb.HangmanChannel do
   def join("hangman:game", _, socket) do
     game = Hangman.new_game()
     socket = assign(socket, :game, game)
+    start_timer()
     { :ok, socket }
   end
 
@@ -28,6 +29,30 @@ defmodule SocketGallowsWeb.HangmanChannel do
 
   def handle_in(message, _, socket) do
     Logger.error("Invalid message: #{message}")
-    { :reply, :ok, socket }
+    { :noreply, socket }
   end
+
+
+  def handle_info({ :tick, 0 }, socket) do
+    game = socket.assigns.game
+    tally = Hangman.tally(game)
+    push(socket, "tally", %{ tally | game_state: :time_run_out })
+    { :noreply, socket}
+  end
+
+  def handle_info({ :tick, seconds_left }, socket) do
+    tick(seconds_left - 1)
+    push(socket, "seconds_left", %{ seconds_left: seconds_left })
+    { :noreply, socket}
+  end
+
+  defp start_timer() do
+    tick(5)
+  end
+
+  defp start_timer(seconds) do
+    Process.send_after(self(), { :tick, seconds}, 1000)
+  end
+
+  defp tick(seconds), do: Process.send_after(self(), { :tick, seconds }, 1000)
 end

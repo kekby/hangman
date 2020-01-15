@@ -7,7 +7,8 @@ const RESPONSES = {
   good_guess:   [ "success", "Good guess!" ],
   bad_guess:    [ "warning", "Bad guess!" ],
   already_used: [ "info",    "You already guessed that" ],
-  initializing: [ "info",    "Let's Play!" ]
+  initializing: [ "info",    "Let's Play!" ],
+  time_run_out: [ "danger",  "Time Is Run Out!"]
 }
 
 let view = function(hangman) {
